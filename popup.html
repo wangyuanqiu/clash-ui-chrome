@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./popup.css" />
+</head>
+
+<body>
+  <div id="app" class="w-80 space-y-4 p-4">
+    <div id="clash-version">loading</div>
+    <div>
+      <input id="proxy-checkbox" type="checkbox" class="rounded border-slate-400" />
+      <label for="proxy-checkbox">enable proxy</label>
+    </div>
+    <div id="proxy-list" class="space-y-4" hidden>
+      <div>
+        <label class="block leading-6">Proxy loading</label>
+        <select class="block w-full rounded border-slate-400">
+        </select>
+      </div>
+    </div>
+  </div>
+  <script src="./popup.js" type="module"></script>
+</body>
+
+</html>
