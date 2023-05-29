@@ -19,8 +19,10 @@ async function setClashVersion() {
   try {
     const version = await getClashVersion();
     node.textContent = `Clash version: ${version}`;
+    return true;
   } catch (error) {
     node.textContent = `${error.message}, clash server is not running.`;
+    return false;
   }
 }
 
@@ -52,7 +54,7 @@ async function setProxySettings(enable) {
   chrome.proxy.settings.set({ value: config, scope: "regular" });
 }
 
-async function setProxyCheckbox() {
+async function setProxyCheckbox(running) {
   const { mode } = await getProxySettings();
   const checkbox = document.querySelector("#proxy-checkbox");
   if (mode === "fixed_servers") {
@@ -60,10 +62,15 @@ async function setProxyCheckbox() {
   } else {
     checkbox.removeAttribute("checked");
   }
-  checkbox.addEventListener("change", function(event) {
-    const checked = event.target.checked;
-    setProxySettings(checked);
-  });
+  if (running) {
+    checkbox.removeAttribute("disabled");
+    checkbox.addEventListener("change", function(event) {
+      const checked = event.target.checked;
+      setProxySettings(checked);
+    });
+  } else {
+    checkbox.setAttribute("disabled", true);
+  }
 }
 
 async function getProxyList() {
@@ -140,8 +147,8 @@ function clearElement(el) {
   }
 }
 
-(function() {
-  setClashVersion();
-  setProxyCheckbox();
+(async function() {
+  const running = await setClashVersion();
+  setProxyCheckbox(running);
   setProxyList();
 })();
