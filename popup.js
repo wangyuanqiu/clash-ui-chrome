@@ -69,7 +69,9 @@ async function setProxyCheckbox(running) {
       setProxySettings(checked);
     });
   } else {
+    checkbox.removeAttribute("checked");
     checkbox.setAttribute("disabled", true);
+    setProxySettings(false);
   }
 }
 
